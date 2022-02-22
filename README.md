@@ -18,6 +18,6 @@ Please, run `npm run build ` in order to get JS modules installed.
 
 
 
-#### License
+#### Author
 
-MIT
+Veselin Dimitrov
