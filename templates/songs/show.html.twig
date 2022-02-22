@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{song.artist ? song.title ~ ' by ' ~ song.artist : song.title}}{% endblock %}
+
+{% block body %}
+<div class="card mb-3">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ asset('images/play-music.svg') }}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-5">
+                  <h2 class="card-title"> {{song.title}}</h2>
+                  <h5 class="card-title"> {{song.artist}}</h5>
+                  <div><a href="{{ path('songs') }}"><< Back to list</a></div>
+          </div>
+          <div class="col-2 bg-dark me-4 pt-2 pb-2">
+                <div class="small fw-bold">RATING</div>
+                <div>
+                 <svg xmlns="http://www.w3.org/2000/svg" class="mb-2" width="25" height="25" fill="orange" viewBox="0 0 16 16">
+                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                        </svg>        
+                   <span class="fs-4 fw-bold">{{ avgRating }}</span>
+                 </div>
+          </div>
+          <div class="col-2 bg-dark pt-2 pb-2">
+            <div class="small fw-bold">VOTES</div>
+            <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#67AD4B" class="mb-2" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"/>
+          </svg>
+              <span class="fs-4 fw-bold">{{ countRatings }}</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-4">
+          Your rating: 
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="orange" class="bi bi-star-fill" viewBox="0 0 16 20">
+                              <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                          </svg>
+          
+          <strong>10</strong></div>
+      </div>
+
+      <div class="bg-dark mt-3 ms-3 p-3">
+            <h6>Ratings</h6>
+            <table class="table">
+                <thead>
+                  <th>Name</th>
+                  <th>E-mail</th>
+                  <th>Rate</th>
+                </thead>
+                <tbody>
+                {% for rating in ratings %}
+                  <tr>
+                    <td>{{rating.user.name}}</td>
+                    <td>{{rating.user.email}}</td>
+                    <td>{{rating.rate}}</td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

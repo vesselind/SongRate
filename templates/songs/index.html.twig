@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SongRate - Songs List{% endblock %}
+
+{% block body %}
+{% for message in app.flashes('notice') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+
+{% if songs %}
+    <table class="table" id="songs-table">
+
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Song</th>
+                <th>Average Rating</th>
+                <th>Your Rating</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+          
+            {% for song in songs %}
+                <tr>
+                    <td>{{ song.id }}</td>
+                    <td class="vertical-align-center">
+                        <a href="{{ path('songs_show', {'id' : song.id}) }}">{{ song.title }}</a> 
+                        <div class="text-muted small">{{song.artist}}</div>
+                    </td>
+                    <td>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="orange" class="bi bi-star-fill" viewBox="0 0 16 20">
+                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                        </svg> <span class="fw-bold text-muted">{{ averageRatings[song.id] }}</span>
+                    </td>
+                    <td>
+                       <button class="btn btn-dark rateDialogBtn" data-bs-toggle="modal" data-bs-target="#rateDialog" data-id="{{song.id}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" fill="orange" class="bi bi-star" viewBox="0 0 16 20">
+                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                        </svg> Rate!
+                        </button>
+                        <span class="fw-bold text-muted">{{ currentUserRatings[song.id] !=0 ? '(' ~ currentUserRatings[song.id] ~ '/10)': '' }}
+                    </td>
+
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('songs_show', {'id' : song.id}) }}">Show</a>
+                        <a class="btn btn-success" href="{{ path('songs_edit', {'id' : song.id}) }}">Edit</a>
+                        <a class="btn btn-danger" href="{{ path('songs_delete', {'id' : song.id}) }}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% else %}
+
+    <div class="alert alert-warning">
+        There are no songs in the database. You can <a href="{{ path('songs_create') }}">add a new one</a>.
+        You can also begin your journey by <a href="{{ path('songs_addfive') }}">adding five songs in a row</a>.
+
+    </alert>
+{% endif %}
+
+
+<!-- Modal -->
+<div class="modal fade" id="rateDialog" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Your rating:</h5>
+        <button type="button" class="btn-close" id="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+                    <span class="star-hoverable" data-score="1"></span>
+                    <span class="star-hoverable" data-score="2"></span>
+                    <span class="star-hoverable" data-score="3"></span>
+                    <span class="star-hoverable" data-score="4"></span>
+                    <span class="star-hoverable" data-score="5"></span>
+                    <span class="star-hoverable" data-score="6"></span>
+                    <span class="star-hoverable" data-score="7"></span>
+                    <span class="star-hoverable" data-score="8"></span>
+                    <span class="star-hoverable" data-score="9"></span>
+                    <span class="star-hoverable" data-score="10"></span>
+                    
+                    <div class="text-center display-6" id="score-display"></div>
+
+                    <div class="alert alert-secondary mt-2 text-center" id="dialog-alert" style="display:none;">
+                        
+                    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="btn-ok">Ok</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+     {{ encore_entry_script_tags('app') }}
+
+       <script src="{{ asset('index.js') }}"></script>
+{% endblock %}

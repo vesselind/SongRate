@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="base-url" content="{{ app.request.schemeAndHttpHost ~ app.request.baseUrl }}">
+        <title>{% block title %}SongRate - Song Rating System{% endblock %}</title>
+        <link rel="icon" href="{{asset('images/songrate_icon.svg')}}">
+
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+    </head>
+    <body>
+        {% if app.user %}
+           {{ include ('inc/header.html.twig') }}
+        {% endif %}
+
+        <main class="mt-4 container">
+        {% block body %}{% endblock %}
+        </main>
+
+        <!-- JS -->
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </body>
+</html>
