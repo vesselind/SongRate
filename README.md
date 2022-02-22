@@ -1,4 +1,4 @@
-![songrate_yellow](public\images\songrate_darkblue.svg)
+![songrate_yellow](https://github.com/vesselind/SongRate/blob/main/public/images/songrate_darkblue.svg)
 
 
 
@@ -6,7 +6,7 @@
 
 - Authentication system - registering and logging in users
 
-- Add and delet songs
+- Add and delete songs
 
 - Add and update ratings, calculate average rating for each song
 
